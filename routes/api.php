@@ -16,13 +16,15 @@ use App\Http\Controllers\api\userController;
 */
 
 Route::controller(userController::class)->group(function(){
-    Route::post('user_register', 'register');
-    Route::get('send_otp/{mobile}', 'sendOtp');
-    Route::get('otp_verification/{mobile}/{otp}', 'otpVerification');
+    // Route::post('user_register', 'register');
+    Route::post('/', 'authenticateWithPhone');
+    Route::post('/resend-otp', 'resendOtp');
+    Route::post('otp-verification', 'otpVerification');
 });
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::get('/get-loggedin-user', [userController::class, 'getLoggedInUser']);
+    Route::post('/update-profile/{id}', [userController::class, 'updateProfile']); 
 });
 
 
